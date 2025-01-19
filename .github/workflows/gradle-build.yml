@@ -45,3 +45,15 @@ jobs:
           properties: |
             kotlin.js.compiler=ir
             kotlin.parallel.tasks.in.project=true
+      - name: Create archive
+        run: |
+          mkdir package
+          cp -R platforms package/
+          cd package
+          zip -r ../build.zip {*,.[!.]*}
+          cd ..
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact
+          path: build.zip
